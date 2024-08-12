@@ -1,37 +1,33 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
-
-import { TabBarIcon } from '@/components/navigation/TabBarIcon';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
-
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
+import React from 'react'
+import { Tabs } from 'expo-router'
+import { View } from 'react-native'
+import AntDesign from '@expo/vector-icons/AntDesign';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+export default function _layout() {
   return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-      }}>
-      <Tabs.Screen
-        name="index"
+    <Tabs>
+        <Tabs.Screen name="calendar" 
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="explore"
+          headerShown: false,
+          tabBarIcon:({focused})=><View>
+            <AntDesign name="calendar" size={24} color="black" />
+          </View>
+          }}/>
+        <Tabs.Screen name="event" 
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'code-slash' : 'code-slash-outline'} color={color} />
-          ),
-        }}
-      />
+          headerShown: false,
+          tabBarIcon:({focused})=><View>
+          <MaterialIcons name="event" size={24} color="black" />
+          </View>
+          }}/>
+        <Tabs.Screen name="amount" 
+        options={{
+          headerShown: false,
+          tabBarIcon:({focused})=><View>
+          <Ionicons name="wallet-outline" size={24} color="black" />
+          </View>
+          }}/>
     </Tabs>
-  );
+  )
 }
