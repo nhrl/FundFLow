@@ -31,8 +31,8 @@ const styles = StyleSheet.create({
         width: '100%',
       },
       dayText: {
-        fontSize: 24, // Match this with your font size
-        lineHeight: 30, // Adjust if needed
+        fontSize: 24,
+        lineHeight: 30,
         textAlign: 'center',
       },
       current_date_container:{
@@ -167,7 +167,56 @@ const styles = StyleSheet.create({
       name_event:{
         fontFamily:'Inter-medium',
         fontSize: 15
-      }
+      },
+      // for pop up modal
+      modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      },
+      modalContent: {
+        width: '90%',
+        padding: 20,
+        backgroundColor: 'white',
+        borderRadius: 10,
+        alignItems: 'center',
+      },
+      backButton: {
+        alignSelf: 'flex-start',
+        marginBottom: 20,
+      },
+      button_input:{
+        width:'100%'
+      },
+      input: {
+        width: '100%',
+        height: 40,
+        borderColor: '#ccc',
+        borderWidth: 1,
+        borderRadius: 5,
+        paddingHorizontal: 10,
+        marginBottom: 15,
+      },
+      saveButton: {
+        width: '100%',
+        height: 40,
+        backgroundColor: '#3C93E5',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 5,
+      },
+      saveButtonText: {
+        color: 'white',
+        fontSize: 16,
+      },
+      errorContainer:{
+        width:"100%"
+      },
+      errorText: {
+        color: 'red',
+        fontSize: 12,
+      },
 });
 
 export default styles

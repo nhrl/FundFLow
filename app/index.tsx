@@ -1,10 +1,11 @@
 import { Text, View, Image,TouchableOpacity} from "react-native";
 import { useEffect } from "react";
 import styles from "@/styles/mainStyle";
-import { Link } from "expo-router";
+import { router } from "expo-router";
 import useAppFonts from "@/styles/useFonts";
-import { createTables } from "@/database/tables/tables";
-import { getData } from "@/database/services/userService";
+import { createTables, dropTable} from "@/database/tables/tables";
+import { checkBudget } from "@/database/services/budgetService";
+
 const source = require('../assets/images/Fund_Flow-removebg-preview.png');
 
 export default function Index() {
@@ -21,8 +22,12 @@ export default function Index() {
     return null;
   }
 
-   async function getdata() {
-    await getData();
+  async function getdata() {
+    const isBudgetValid:boolean = await checkBudget();
+    if(isBudgetValid == true)
+      router.push('/calendar');
+    else
+      router.push('/budget');
   }
 
   return (
@@ -39,11 +44,9 @@ export default function Index() {
         <Text style={styles.description}>Effortlessly manage and track your budgets.</Text>
       </View>
       <View style={styles.button_container}>
-        <Link href={'/budget'} asChild>
         <TouchableOpacity style={styles.button} onPress={getdata}>
           <Text style={styles.button_text}>Start</Text>
         </TouchableOpacity>
-        </Link>
       </View>
     </View>
   );

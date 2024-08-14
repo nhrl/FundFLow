@@ -3,8 +3,11 @@ import {View, Text, TextInput,TouchableOpacity} from 'react-native'
 import styles from '@/styles/mainStyle'
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
-import { Link } from "expo-router";
+import { router } from "expo-router";
 import useAppFonts from '@/styles/useFonts';
+import { formatMoney } from '@/database/services/formatMoney';
+import { addBudget} from '@/database/services/budgetService';
+
 
 export default function budget() {
   const { loaded, error } = useAppFonts();
@@ -13,16 +16,7 @@ export default function budget() {
     return null;
   }
 
-  //Put comma in every 3 digits in the input box
   const [value, setValue] = useState('');
-  const formatMoney = (value: string): string => {
-  
-    const cleanedValue = value.replace(/\D/g, '');
-
-    const formattedValue = cleanedValue.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-
-    return formattedValue;
-  };
 
   const handleChange = (text: string) => {
     let cleanedText = text.replace(/^0+/, '');
@@ -30,9 +24,11 @@ export default function budget() {
     setValue(formattedText);
   };
 
-  const submit = () => {
+  const submit = async () => {
     const cleanedValue = value.replace(/,/g, '');
-    console.log(cleanedValue);
+    const numericValue = parseFloat(cleanedValue);
+    await addBudget(numericValue);
+    router.replace('/calendar');
   };
   
   return (
@@ -53,11 +49,9 @@ export default function budget() {
             style= {styles.input_box}/>
         </View>
         <View style = {styles.budget_button_container}>
-          <Link href={"/calendar"} asChild>
           <TouchableOpacity style={styles.budget_button} onPress={submit}>
               <Text style={styles.budget_button_text}>Proceed</Text>
-            </TouchableOpacity>
-          </Link>
+          </TouchableOpacity>
         </View>
       </View>
     </>

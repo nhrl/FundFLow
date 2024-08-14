@@ -1,20 +1,45 @@
 import {View, Text,TouchableOpacity,ScrollView} from 'react-native'
 import { format, addMonths, subMonths } from 'date-fns';
 import AntDesign from '@expo/vector-icons/AntDesign';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from '@/styles/budget'
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+import { getTotalBudget,getCurrentBudget } from '@/database/services/budgetService'; 
+import { formatMoney } from '@/database/services/formatMoney';
 
 export default function calendar() {
   const [currentDate, setCurrentDate] = useState(new Date());
-
+  const [totalBudget, setTotalBudget] = useState<string>('0');
+  const [currentBudget, setCurrentBudget] = useState<string>('0');
   const handlePrevMonth = () => {
     setCurrentDate(subMonths(currentDate, 1));
   };
 
+  useEffect(() => {
+    getData();
+  }, []);
+  
   const handleNextMonth = () => {
     setCurrentDate(addMonths(currentDate, 1));
   };
+
+  const getData = async () => {
+    try {
+      const budget = await getTotalBudget();
+      const current = await getCurrentBudget();
+      const formatBudget = formatMoney(budget.toString());
+      const formatCurrent = formatMoney(current.toString());
+      setTotalBudget(formatBudget);
+      setCurrentBudget(formatCurrent);
+    } catch (error) {
+      console.error('Error fetching budget data:', error);
+      setTotalBudget(formatMoney('0'));
+      setCurrentBudget(formatMoney('0'));
+    }
+  };
+
+
+
   return (
     <>
     <View style = {styles.main_container}>
@@ -27,11 +52,11 @@ export default function calendar() {
           </TouchableOpacity>
         </View>
         <View style = {styles.current_balance}>
-          <Text style = {styles.amount_balance}>{'\u20B1'} 210,900,000</Text>
+          <Text style = {styles.amount_balance}>{'\u20B1'} {currentBudget}</Text>
         </View>
         <View style = {styles.total_amount_container}>
           <Text style = {styles.budget_title}>Total Budget:</Text>
-          <Text style = {styles.amount_budget}> {'\u20B1'} 300,000,000</Text>
+          <Text style = {styles.amount_budget}> {'\u20B1'} {totalBudget}</Text>
         </View>
       </View>
     </View>
