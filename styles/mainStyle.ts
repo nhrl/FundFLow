@@ -12,6 +12,12 @@ const styles = StyleSheet.create({
         height: 300,
         resizeMode: 'contain'
       },
+      bigTitle: {
+        fontSize:50,
+        fontFamily: 'Inter',
+        color: '#38B6FF',
+      },
+
       title:{
         color: '#38B6FF',
         fontSize:50,

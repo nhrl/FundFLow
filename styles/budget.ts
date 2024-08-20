@@ -120,12 +120,78 @@ const styles = StyleSheet.create({
       },
       event_info: {
         fontFamily: 'Inter-semi',
-        fontSize: 18
+        fontSize: 15
       },
       info_wrapper:{
         flex: 1,
         justifyContent:'center'
-      }
+      },
+      emptyEvent: {
+        flex:1,
+        justifyContent:'center',
+        alignItems:'center',
+        marginTop: 20
+      },
+      //Modal
+      addCashModal: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      },
+      addCashContent: {
+        width: 300,
+        height: 300,
+        justifyContent:'center',
+        backgroundColor: 'white',
+        padding: 20,
+        borderRadius: 10,
+        alignItems: 'center',
+      },
+      peso_sign: {
+        position:'absolute',
+        left: 6,
+        top: 10,
+        color: '#7F7979',
+        fontSize: 23,
+        fontFamily: 'Inter'
+      },
+      input_box:{
+        borderColor: 'black',
+        height:50,
+        borderRadius: 4,
+        borderWidth: 2,
+        paddingLeft: 30,
+        fontSize: 18
+      },
+      input_container:{
+        width: '100%',
+        marginBottom: 20
+      },
+      button: {
+        width: '100%',
+        padding: 10,
+        marginVertical: 5,
+        backgroundColor: '#3C93E5',
+        borderRadius: 5,
+        alignItems: 'center',
+      },
+      buttonText: {
+        color: 'white',
+        fontSize: 18,
+      },
+      cancelButton: {
+        width: '100%',
+        padding: 10,
+        marginVertical: 5,
+        backgroundColor: '#ccc',
+        borderRadius: 5,
+        alignItems: 'center',
+      },
+      cancelButtonText: {
+        color: '#333',
+        fontSize: 18,
+      },
 });
 
 export default styles;

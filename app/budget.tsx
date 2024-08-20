@@ -25,10 +25,15 @@ export default function budget() {
   };
 
   const submit = async () => {
-    const cleanedValue = value.replace(/,/g, '');
-    const numericValue = parseFloat(cleanedValue);
-    await addBudget(numericValue);
-    router.replace('/calendar');
+    if(value.length == 0) {
+      alert('Please Enter Amount');
+    } else {
+      const cleanedValue = value.replace(/,/g, '');
+      const numericValue = parseFloat(cleanedValue);
+      await addBudget(numericValue);
+      router.replace('/calendar');
+    }
+    
   };
   
   return (

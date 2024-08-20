@@ -1,5 +1,5 @@
 import * as SQLite from 'expo-sqlite';
-import { formatMoney } from './formatMoney';
+
 
 interface BudgetResult {
     total_budget: number;
@@ -16,10 +16,8 @@ export const getTotalBudget = async () => {
 
 export const getCurrentBudget = async () => {
     const result: BudgetResult | null = await db.getFirstAsync('SELECT current_budget FROM budget LIMIT 1');
-    const currentBudget = result?.current_budget;
-    let formattedMoney = currentBudget !== undefined ? currentBudget.toString() : '0';
-    const formattedText = formatMoney(formattedMoney);
-    return formattedText
+    const totalBudget = result?.current_budget || 0;
+    return result?.current_budget ?? 0;
 }
 
 export const subtractBudget = async (allocatedBudget: number) => {
@@ -27,8 +25,12 @@ export const subtractBudget = async (allocatedBudget: number) => {
     let currentBudget = result?.current_budget;
         if(currentBudget != undefined) {
             currentBudget -= allocatedBudget;
-            await db.runAsync('UPDATE budget SET current_budget = ? WHERE id = ?', [currentBudget, 1]);
-        }
+           await db.runAsync('UPDATE budget SET current_budget = ? WHERE id = ?', [currentBudget, 1]);
+        } 
+}
+
+export const addCurrentBudget = async (currentBudget: number) => {
+    await db.runAsync('UPDATE budget SET current_budget = ? WHERE id = ?', [currentBudget, 1]);
 }
 
 export const addBudget = async (totalBudget: number) => {
@@ -46,6 +48,18 @@ export const checkBudget = async (): Promise<boolean> => {
     }
 }
 
-export const dropTable = async () => {
-    await db.execAsync(`DROP TABLE budget`);
+export const addCash = async (budget : number) => {
+    const total: BudgetResult | null = await db.getFirstAsync('SELECT total_budget FROM budget LIMIT 1');
+    const current: BudgetResult | null = await db.getFirstAsync('SELECT current_budget FROM budget LIMIT 1');
+    let totalBudget = total?.total_budget || 0;
+    let totalCurrent = current?.current_budget || 0;
+
+    totalBudget += budget;
+    totalCurrent += budget;
+
+    await db.runAsync(`UPDATE budget SET total_budget = ?, current_budget = ? WHERE id = ?`,
+        totalBudget,
+        totalCurrent,
+        1
+    )
 }

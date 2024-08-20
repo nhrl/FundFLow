@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ReactNode } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import styles from '@/styles/tabStyle';
@@ -7,7 +7,7 @@ import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import EventModal from '@/components/eventModal';
 import { format } from 'date-fns';
 import useAppFonts from '@/styles/useFonts';
-import { getTotalBudget } from '@/database/services/budgetService';
+import { getCurrentBudget } from '@/database/services/budgetService';
 import { addEvent,getTodaysEvent} from '@/database/services/eventService';
 
 const getCurrentDate = () => {
@@ -63,7 +63,7 @@ export default function CalendarScreen() {
   }
   
   const getBudget = async () => {
-    const total = await getTotalBudget();
+    const total = await getCurrentBudget();
     setTotalBudget(total);
   }
 
@@ -99,34 +99,29 @@ export default function CalendarScreen() {
       newErrors.endTime = '';
     }
 
+    const budgetLimitValue = parseInt(budgetLimit, 10);
     const allocatedBudgetValue = parseInt(allocatedBudget, 10);
+
     if (!allocatedBudget.trim() || isNaN(allocatedBudgetValue) || allocatedBudgetValue <= 0) {
       newErrors.allocatedBudget = 'Allocated budget is required';
       isValid = false;
-    } else {
-      newErrors.allocatedBudget = '';
-    }
-    const budgetLimitValue = parseInt(budgetLimit, 10);
-    if (!budgetLimit.trim() || isNaN(budgetLimitValue) || budgetLimitValue <= 0) {
-      newErrors.budgetLimit = 'Budget limit is required';
-      isValid = false;
-    } else {
-      newErrors.budgetLimit = '';
-    }
-    if(allocatedBudgetValue > budgetLimitValue) {
+    } else if (allocatedBudgetValue > budgetLimitValue) {
       newErrors.allocatedBudget = 'Please reduce the allocated budget to be within the budget limit.'
       isValid = false;
     } else {
       newErrors.allocatedBudget = '';
-    }
+    } 
 
-    if(budgetLimitValue > totalBudget) {
+    if (!budgetLimit.trim() || isNaN(budgetLimitValue) || budgetLimitValue <= 0) {
+      newErrors.budgetLimit = 'Budget limit is required';
+      isValid = false;
+    } else if (budgetLimitValue > totalBudget) {
       newErrors.budgetLimit = 'The budget limit cannot exceed the total available budget. Please adjust the budget limit.';
       isValid = false;
     } else {
       newErrors.budgetLimit = ''; 
     }
-
+   
     setErrors(newErrors);
     if (isValid) {
       const event = {
@@ -139,6 +134,7 @@ export default function CalendarScreen() {
       }
       
       await addEvent(event);
+      getEvent();
       // Reset form values
       setEventName('');
       setDate('');

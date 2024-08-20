@@ -217,6 +217,75 @@ const styles = StyleSheet.create({
         color: 'red',
         fontSize: 12,
       },
+      Event_Empty:{
+        flex:1,
+        justifyContent:'center',
+        alignItems:'center',
+        marginTop: 20
+      },
+      eventContainer: {
+        padding: 15,
+        backgroundColor: '#f5f5f5',
+        marginVertical: 5,
+        borderRadius: 5,
+      },
+      eventText: {
+        fontSize: 16,
+      },
+      modalContainer1: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      },
+      modalContent1: {
+        width: 300,
+        backgroundColor: 'white',
+        padding: 20,
+        borderRadius: 10,
+        alignItems: 'center',
+      },
+      button: {
+        width: '100%',
+        padding: 10,
+        marginVertical: 5,
+        backgroundColor: '#3C93E5',
+        borderRadius: 5,
+        alignItems: 'center',
+      },
+      buttonText: {
+        color: 'white',
+        fontSize: 18,
+      },
+      cancelButton: {
+        width: '100%',
+        padding: 10,
+        marginVertical: 5,
+        backgroundColor: '#ccc',
+        borderRadius: 5,
+        alignItems: 'center',
+      },
+      cancelButtonText: {
+        color: '#333',
+        fontSize: 18,
+      },
+      //edit modal
+      editModalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      },
+      editModalContent: {
+        width: 300,
+        backgroundColor: 'white',
+        padding: 20,
+        borderRadius: 10,
+        alignItems: 'center',
+      },
+      input_Container:{
+        width: '100%',
+      }
 });
 
 export default styles

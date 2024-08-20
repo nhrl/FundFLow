@@ -6,7 +6,7 @@ import useAppFonts from "@/styles/useFonts";
 import { createTables, dropTable} from "@/database/tables/tables";
 import { checkBudget } from "@/database/services/budgetService";
 
-const source = require('../assets/images/Fund_Flow-removebg-preview.png');
+const source = require('../assets/images/454525476_476099905313240_1228432509125542235_n-removebg-preview.png');
 
 export default function Index() {
   const initializeDatabase = async () => {
@@ -34,6 +34,9 @@ export default function Index() {
     <View style={styles.container}>
       <View>
         <Image source={source} style={styles.images} />
+      </View>
+      <View>
+        <Text style = {styles.bigTitle}>SK</Text>
       </View>
       <View>
         <Text style={styles.text}>

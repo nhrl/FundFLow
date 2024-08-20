@@ -154,7 +154,7 @@ const EventModal: React.FC<EventModalProps> = ({
               mode="time"
               value={timeStart || new Date()}
               onChange={handleTimeStartChange}
-              display="spinner"
+              display="default"
             />
           )}
 
@@ -174,7 +174,7 @@ const EventModal: React.FC<EventModalProps> = ({
               mode="time"
               value={timeEnd || new Date()}
               onChange={handleTimeEndChange}
-              display="spinner"
+              display="default"
             />
           )}
 
